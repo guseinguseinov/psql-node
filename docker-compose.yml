@@ -1,0 +1,38 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgres:alpine
+    container_name: postgres
+    restart: unless-stopped
+    ports: 
+      - 5432:5432
+    networks:
+      - reverse-proxy
+    volumes:
+      - postgres_db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Maykradexla2019
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    restart: unless-stopped
+    ports: 
+      - 5050:80
+    networks:
+      - reverse-proxy
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=dba@mediusoft.com
+      - PGADMIN_DEFAULT_PASSWORD=Maykradexla2019
+
+networks:
+  reverse-proxy:
+    external: true
+
+volumes:
+  postgres_db:
+  pgadmin_data:
